@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+// import {useEffect, useState} from 'react'
 import {
     Table,
     TableBody,
@@ -13,7 +13,7 @@ import { ShareIcon } from 'lucide-react';
 
 export default function JsonTable() {
     // const [jsonDataList, setJsonDataList] = useState<JsonData[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    // const [loading, setLoading] = useState<boolean>(true);
     const jsonDataList = [
     {
         id: "45",
