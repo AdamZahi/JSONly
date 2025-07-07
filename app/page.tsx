@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs"
 
 export default function Home() {
   return (
@@ -7,6 +9,16 @@ export default function Home() {
         Our app makes essay to share your JSON data with others. Simply
         authenticate and upload your data
       </p>
+      <SignedOut>
+        <div className="mt-16 flex flex-row gap-4">
+                    <Button className='cursor-pointer bg-gray-300 hover:bg-gray-400 text-black font-semibold'>
+                        <SignUpButton mode='modal'/>
+                    </Button>
+                    <Button className='cursor-pointer font-semibold'>
+                        <SignInButton mode='modal'/>
+                    </Button>
+        </div>
+      </SignedOut>
     </div>
   );
 }
