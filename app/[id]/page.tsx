@@ -1,18 +1,18 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { JsonData } from '@prisma/client';
 
 type PageProps = {
-    params: { id: string }
+    params: { id: string };
 };
 
 export default function Page({ params }: PageProps) {
     const [jsonData, setJsonData] = useState<JsonData | null>(null);
     const [loading, setLoading] = useState(true);
-    const { id } = use(params);
+    const { id } = params;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,6 +27,7 @@ export default function Page({ params }: PageProps) {
             setLoading(false);
         }
         };
+
         fetchData();
     }, [id]);
 
