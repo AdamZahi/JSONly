@@ -1,47 +1,53 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
-import { useEffect, useState } from 'react';
 import { JsonData } from '@prisma/client';
 
 type PageProps = {
     params: { id: string }
-    }
+};
 
 export default function Page({ params }: PageProps) {
     const { id } = params;
-    const [jsonData, setJsonData] = useState<JsonData>();
-    const [loading, setLoading] = useState<boolean>(true);
+    const [jsonData, setJsonData] = useState<JsonData | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetch(`/api/json/${id}`);
-                const data = await response.json();
-                setJsonData(data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-                setLoading(false);
-            }
+        try {
+            const response = await fetch(`/api/json/${id}`);
+            if (!response.ok) throw new Error('Failed to fetch');
+            const data = await response.json();
+            setJsonData(data);
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+        } finally {
+            setLoading(false);
+        }
         };
         fetchData();
     }, [id]);
 
     if (loading) {
-        return <div className='mt-8'>loading...</div>;
+        return <div className="mt-8">loading...</div>;
     }
+
+    if (!jsonData) {
+        return <div className="mt-8 text-red-500">No data found for this ID.</div>;
+    }
+
     return (
-        <div className='mt-8 space-y-4'>
-            <h1 className='text-2xl underline font-bold'>{jsonData?.name}</h1>
-            <CodeMirror
-                value={jsonData?.content || ''}
-                height='400px'
-                extensions={[json()]}
-                editable={false}
-                className='border shadow-sm'
-            />
+        <div className="mt-8 space-y-4">
+        <h1 className="text-2xl underline font-bold">{jsonData.name}</h1>
+        <CodeMirror
+            value={jsonData.content || ''}
+            height="400px"
+            extensions={[json()]}
+            editable={false}
+            className="border shadow-sm"
+        />
         </div>
     );
 }
