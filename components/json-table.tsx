@@ -7,10 +7,10 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import Link from 'next/link';
+// import Link from 'next/link';
 import { JsonData } from '@prisma/client';
 import { format } from 'date-fns';
-import { ShareIcon } from 'lucide-react';
+// import { ShareIcon } from 'lucide-react';
 
 export default function JsonTable() {
     const [jsonDataList, setJsonDataList] = useState<JsonData[]>([]);
@@ -64,9 +64,9 @@ export default function JsonTable() {
                     {format(new Date(data.createdAt), 'dd MMMM yyyy')}
                 </TableCell>
                 <TableCell>
-                    <Link href={`/${data.id}`}>
+                    {/* <Link href={`/${data.id}`}>
                         <ShareIcon className='h-4 w-4' />
-                    </Link>
+                    </Link> */}
                 </TableCell>
             </TableRow>
             ))}
