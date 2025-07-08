@@ -1,11 +1,17 @@
-import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/db";
+
+type RouteContext = {
+  params: {
+    id: string;
+  };
+};
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
-  const { id } = params;
+  const { id } = context.params;
 
   try {
     const json = await prisma.jsonData.findUnique({
