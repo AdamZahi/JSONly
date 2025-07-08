@@ -1,11 +1,12 @@
 import prisma from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(
-    request: NextRequest,
-    context: { params: { id: string } }
-    ) {
-    const { id } = context.params;
+export async function GET(req, { params }) {
+    
+    const { id } = await params;
+    if (!id) {
+    return new Response(JSON.stringify({ error: 'Missing id' }), { status: 400 });
+        }
 
     try {
         const json = await prisma.jsonData.findUnique({
